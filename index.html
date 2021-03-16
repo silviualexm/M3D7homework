@@ -51,6 +51,35 @@
     -->
 	</head>
 	<body>
+		<div class="dropdown">
+			<button
+				class="btn btn-secondary dropdown-toggle"
+				type="button"
+				id="dropdownMenuButton"
+				data-toggle="dropdown"
+				aria-haspopup="true"
+				aria-expanded="false"
+			>
+				Dropdown button
+			</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">NAME</a>
+				<a class="dropdown-item" href="#">USERNAME</a>
+				<a class="dropdown-item" href="#">EMAIL</a>
+			</div>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">NAME</th>
+					<th scope="col">USERNAME</th>
+					<th scope="col">EMAIL</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script
@@ -66,26 +95,42 @@
 
 		<script>
 			// Ex1) Retrieve and display, using async / await pattern the users from: https://jsonplaceholder.typicode.com/users
-
+			let users = [];
 			const getUsers = async () => {
-				try {
-					let response = await fetch(
-						"https://jsonplaceholder.typicode.com/users"
-					);
-					let fetchdata = await ((response) => response.json());
-					console.log(fetchdata);
-					//let data = await ((fetchdata) => console.log(fetchdata));
-				} catch (err) {
-					console.log(err);
-				}
+				let response = await fetch(
+					"https://jsonplaceholder.typicode.com/users"
+				);
+				let fetchdata = await response.json();
+				users = fetchdata;
+				console.log(users);
 
-				//return data;
+				users.forEach((user) => {
+					let tbody = document.getElementsByTagName("tbody")[0];
+
+					tbody.innerHTML += `
+			                 <tr>
+			                      <th scope="row">${user.id}</th>
+			                      <td>${user.name}</td>
+			                      <td>${user.username}</td>
+			                      <td>${user.email}</td>
+			                 </tr>
+			                  `;
+					console.log(user.name);
+				});
 			};
 			getUsers();
 			// fetch("https://jsonplaceholder.typicode.com/users")
 			// 	.then((response) => response.json())
 			// 	.then((data) => console.log(data))
 			// 	.catch((err) => console.log(err));
+
+			//     Ex2) Create a dropdown (<select>) that allows the user to select between name, username and email.
+			//    Create then a filter. When the user types in something, you should filter the user based on the input and on the value of the select.
+			//    Es.: select on NAME. Filter input = Glenna, only user id number 9 should remain
+
+			 const fromDropdown = () => {
+			     document.get getElementsByTagName("table")[0].innerHTML = ""
+			 }
 		</script>
 	</body>
 </html>
